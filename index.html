@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="HILDE: A Human-in-the-Loop Differential Evolution Framework for Rapid PID Tuning in Robotic Systems.">
+  <meta name="keywords" content="HILDE, Differential Evolution, PID Tuning, Robotics, Human-in-the-Loop">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HILDE: Human-in-the-Loop Differential Evolution Framework</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics (Remove or replace with your own if desired) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- Navigation Bar (kept exactly the same style) -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <!--
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+        <span class="icon">
+          <i class="fas fa-home"></i>
+        </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+    -->
+  </div>
+</nav>
+<!-- / Navigation Bar -->
+
+
+<!-- Title & Authors -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">HILDE: A Human-in-the-Loop Differential Evolution Framework for Rapid PID Tuning in Robotic Systems</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://zaidghazal.github.io">Zaid Ghazal</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://alibustami.github.io">Ali Al-Bustami</a><sup>1</sup>,
+            </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Department of Computer and Information Science, University of Michigan-Dearborn</span>
+            <span class="author-block"><sup>2</sup>Department of Electrical and Computer Engineering, University of Michigan-Dearborn</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Paper Link -->
+              <span class="link-block">
+                <a href="https://example.com/paper.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper (PDF)</span>
+                </a>
+              </span>
+              <!-- Arxiv Link -->
+              <span class="link-block">
+                <a href="https://arxiv.org"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- GitHub Link -->
+              <span class="link-block">
+                <a href="https://github.com/YourGitHub/HILDE"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>GitHub</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- / Title & Authors -->
+
+<!-- Main Content (Paper) -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+
+        <!-- BEGIN: Paper Content -->
+        <div class="content has-text-justified">
+
+          <h2 class="title is-3">Abstract</h2>
+          <p>
+            Tuning Proportional-Integral-Derivative (PID) gains for fast, stable control in robotic applications
+            can be challenging, especially for nonlinear systems. This paper presents a Human-in-the-Loop Differential
+            Evolution (HILDE) framework that combines automated global search with real-time human feedback to guide
+            parameter exploration. Using a simulated small-scale differential-drive robot performing a 90° turn, HILDE
+            dynamically adjusts the mutation factor in response to operator “Reject” or “Confirm” inputs, thereby
+            balancing global exploration against local refinement. Experimental results show that HILDE converges to a
+            shorter settling time (~0.96 s) in only 55 iterations, a ~94.5% reduction in iterations relative to a
+            conventional DE method, while trading off a higher overshoot.
+          </p>
+
+          <hr>
+
+          <h2 class="title is-3">I. Introduction</h2>
+          <p>
+            Proportional-Integral-Derivative (PID) controllers are widely used in robotics due to their simplicity and
+            effectiveness in managing continuous processes. However, tuning the PID gains <em>(K<sub>p</sub>, K<sub>i</sub>, K<sub>d</sub>)</em>
+            to achieve optimal performance, such as short settling times and low overshoot, remains challenging,
+            particularly for nonlinear systems. Traditional methods, like Ziegler-Nichols, often struggle in these
+            scenarios, resulting in suboptimal control outcomes.
+          </p>
+          <p>
+            Evolutionary algorithms (EAs), including Differential Evolution (DE), provide systematic approaches for
+            exploring large parameter spaces but may propose unsafe or infeasible solutions without human oversight.
+            Although Human-in-the-Loop (HIL) methods can mitigate these risks by leveraging expert feedback, such
+            approaches are often time-consuming and may not fully harness the strengths of automated optimization.
+          </p>
+          <p>
+            To address these challenges, this paper introduces a Human-in-the-Loop Differential Evolution (HILDE)
+            framework that integrates DE optimization with real-time human feedback for PID tuning. Specifically,
+            “Reject” feedback cues larger mutations, facilitating broader exploration, while “Confirm” feedback supports
+            more fine refinement of promising solutions. Demonstrated on a small-scale differential-drive robot
+            performing a 90-degree in-place rotation, this combined automated-human strategy accelerates convergence,
+            improves PID tuning efficiency, and offers a flexible balance between performance metrics like settling
+            time and overshoot.
+          </p>
+
+          <hr>
+
+          <h2 class="title is-3">II. Methodology</h2>
+          <h3 class="title is-4">A. Optimization Formulation</h3>
+          <p>
+            Consider a differential-drive robot performing a 90-degree in-place rotation. Let <em>e(t)</em> denote
+            the angular error. The PID control input is presented in Equation (1):
+          </p>
+          <pre><code>u(t) = Kp * e(t) + Ki * ∫(0 to t) e(τ) dτ + Kd * de(t)/dt</code></pre>
+          <p>
+            where <em>(K<sub>p</sub>, K<sub>i</sub>, K<sub>d</sub>)</em> are proportional, integral, and derivative
+            gains. To achieve fast settling with controlled overshoot, we solve Equation (2):
+          </p>
+          <pre><code>min  T<sub>s</sub>  subject to  O ≤ O<sub>max</sub>,  T<sub>r</sub> ∈ [T<sub>r,min</sub>, T<sub>r,max</sub>]</code></pre>
+
+          <h3 class="title is-4">B. Human-in-the-Loop Differential Evolution</h3>
+          <p>
+            We use the metaheuristic DE algorithm to optimize <em>(K<sub>p</sub>, K<sub>i</sub>, K<sub>d</sub>)</em>
+            with human feedback guiding the mutation scale <em>F</em>. After each 90-degree turn, the robot measures
+            {T<sub>s</sub>, O, T<sub>r</sub>}. If “Reject,” <em>F</em> increases to promote exploration; if “Confirm,”
+            <em>F</em> decreases to refine promising solutions. Algorithm 1 details the complete logic.
+          </p>
+
+          <figure>
+            <img src="./assets/hilde_robot.png" alt="Robot performing 90-degree turn (example image)">
+            <figcaption>
+              <em>
+                Fig. 1. Example screenshot from the robot simulation and real-time results visualization,
+                during the 90-degree in-place rotation execution.
+              </em>
+            </figcaption>
+          </figure>
+
+          <pre><code>Algorithm 1 Human-in-the-Loop DE (HILDE)
+1: Input: Population size N, maximum generations G<sub>max</sub>, gain bounds, mutation factor F, crossover rate C<sub>r</sub>.
+2: Initialize: Randomly generate {x<sub>0</sub><sup>i</sup>}<sub>i=1..N</sub> within gain bounds.
+3: for generation g = 0 to G<sub>max</sub> do
+4:   for each individual n = 1 to N do
+5:       Mutation &amp; Crossover: Create trial vector v<sub>g</sub><sup>n</sup> from x<sub>g</sub><sup>n</sup> using standard DE operators (mutation scale F, crossover rate C<sub>r</sub>).
+6:       Evaluation: Apply v<sub>g</sub><sup>n</sup> = (K<sub>p</sub>, K<sub>i</sub>, K<sub>d</sub>) on the robot, execute a 90° rotation, measure {T<sub>s</sub>, O, T<sub>r</sub>}.
+7:       Human Feedback:
+8:         • Reject &rarr; Increase F (promote exploration).
+9:         • Confirm &rarr; Decrease F (promote refinement).
+10:      Selection: Compare v<sub>g</sub><sup>n</sup> to x<sub>g</sub><sup>n</sup>. Keep the one with better T<sub>s</sub> (discard if O &gt; O<sub>max</sub> or T<sub>r</sub> out of range).
+11:   end for
+12: end for
+13: Output: Best performing gains (K<sub>p</sub>, K<sub>i</sub>, K<sub>d</sub>) based on final settling time T<sub>s</sub> and constraints.
+</code></pre>
+
+          <hr>
+
+          <h2 class="title is-3">III. Experimental Setup</h2>
+          <p>
+            HILDE was evaluated in a simulated differential-drive robot environment, with the PID control loop
+            running at a fixed rate based on simulated IMU data. Each iteration of HILDE proceeds as follows:
+          </p>
+          <ol>
+            <li>Upload candidate gains <em>(K<sub>p</sub>, K<sub>i</sub>, K<sub>d</sub>)</em> to the simulator.</li>
+            <li>Simulate a 90° turn from rest and record <em>{T<sub>s</sub>, O, T<sub>r</sub>}</em>.</li>
+            <li>Operator optionally provides a “Reject” or “Confirm” response.</li>
+          </ol>
+          <p>
+            Solutions exceeding <em>O<sub>max</sub></em> or violating <em>T<sub>r</sub> ∈ [T<sub>r,min</sub>, T<sub>r,max</sub>]</em>
+            are discarded. Feasible candidates are ranked by <em>T<sub>s</sub></em>, and DE evolves toward parameter
+            sets that minimize settling time. Human oversight eliminates poor-performing gains early and refines
+            promising solutions more quickly, improving convergence speed and final accuracy.
+          </p>
+
+          <hr>
+
+          <h2 class="title is-3">IV. Results and Discussion</h2>
+          <p>
+            Table 1 compares the final PID parameters and performance metrics for the conventional DE method (labeled
+            “Conventional DE”) and the proposed HILDE strategy. HILDE converges in 55 iterations, a ~94.5% decrease
+            relative to the 1000 iterations needed by Conventional DE, while achieving a lower settling time of
+            0.96 s (an ~18% reduction compared to 1.17 s). Despite this advantage, the HILDE solution shows a higher
+            overshoot (22.35% vs. 14.31%) due to more aggressive gains. Figure 2 indicates that HILDE quickly converges
+            to near-optimal settings, whereas Conventional DE requires many more generations to achieve comparable
+            settling performance.
+          </p>
+
+          <figure>
+            <img src="./assets/performance_comparison.png" alt="Comparison of HILDE vs Conventional DE">
+            <figcaption>
+              <em>
+                Fig. 2. Converged settling time over iterations for both Conventional DE and HILDE.
+                HILDE requires significantly fewer iterations to reach a similar or better performance.
+              </em>
+            </figcaption>
+          </figure>
+
+          <table class="table is-fullwidth">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>No. Iterations</th>
+                <th>Kp</th>
+                <th>Ki</th>
+                <th>Kd</th>
+                <th>Ts (s)</th>
+                <th>O (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Conventional DE</td>
+                <td>1000</td>
+                <td>9.94</td>
+                <td>1.98</td>
+                <td>0.003</td>
+                <td>1.17</td>
+                <td>14.31</td>
+              </tr>
+              <tr>
+                <td>HILDE</td>
+                <td>55</td>
+                <td>28.49</td>
+                <td>3.28</td>
+                <td>1.31</td>
+                <td>0.96</td>
+                <td>22.35</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr>
+
+          <h2 class="title is-3">V. Conclusion</h2>
+          <p>
+            In summary, the HILDE framework leverages human feedback to guide the mutation scale in real time,
+            accelerating convergence and more effectively filtering out undesirable parameter sets compared to
+            conventional DE. Specifically, HILDE achieves a ~94.5% reduction in iteration count while improving
+            settling time by ~18%. Although the resulting gains exhibit higher overshoot, the framework offers
+            a flexible mechanism through overshoot constraints or adjusted human feedback to tailor performance
+            objectives. These findings highlight the benefit of combining automated global search with expert oversight,
+            offering a promising avenue for wider application in robotic and mechatronic control-system tuning tasks.
+          </p>
+
+          <hr>
+
+          <h2 class="title is-3">References</h2>
+          <ol>
+            <li>
+              J. G. Ziegler and N. B. Nichols, “Optimum settings for automatic controllers,” <em>Trans. ASME</em>,
+              vol. 64, pp. 759–768, 1942.
+            </li>
+            <li>
+              J. R. Koza, <em>Genetic Programming: On the Programming of Computers by Means of Natural Selection</em>.
+              MIT Press, 1992.
+            </li>
+            <li>
+              J. Kennedy and R. C. Eberhart, “Particle swarm optimization,” in <em>Proc. IEEE Int. Conf. on Neural
+              Networks</em>, 1995, pp. 1942–1948.
+            </li>
+            <li>
+              R. Storn and K. Price, “Differential evolution—a simple and efficient heuristic for global optimization
+              over continuous spaces,” <em>Journal of Global Optimization</em>, vol. 11, pp. 341–359, 1997.
+            </li>
+            <li>
+              A. Kothari, M. Mehl, and S. Ramsaran, “Closing the control loop with human input: A survey on
+              human-in-the-loop control,” <em>Annual Reviews in Control</em>, vol. 50, pp. 120–134, 2020.
+            </li>
+            <li>
+              S. Bhattacharjee, S. Das, and A. Biswas, “Human-in-the-loop optimization: A survey,” <em>Archives of
+              Computational Methods in Engineering</em>, vol. 30, no. 5, pp. 2901–2936, 2023.
+            </li>
+          </ol>
+        </div>
+        <!-- END: Paper Content -->
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- / Main Content (Paper) -->
+
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <!-- Example link left as in original, remove or replace as desired -->
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+              href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the
+            <a href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- / Footer -->
+
+</body>
+</html>
